@@ -15,7 +15,7 @@ var possibleHours = [
 
 //This is how you get the time to display at the top of the page
 var currentDayEl = $('#currentDay');
-var hourStyle
+var hourStyle = $('col-1 hour');
 
 // Add current day to <p> tag 
 var currentDay = moment().format('MMMM Do, YYYY');
@@ -86,15 +86,12 @@ var checkHour = function (tasksSpace) {
             id: 'Hour-' + (i + 9)
         });
 
+// Append all the element so they show up within the container div 
         $(".container").append(tasksRow);
-        //append timeBlockHour to TimbeBlockRow
         $(tasksRow).append(tasksHour);
-        //append timeBlockEventSpace to timeBlockRow
         $(tasksRow).append(tasksSpace);
-        //append <p> element to timeBlockEventSpace
         $(tasksSpace).append(userInput);
         $(tasksRow).append(saveBtn);
-        //append save icon to save button
         $(saveBtn).append(saveIcon);
 
         
