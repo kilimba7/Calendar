@@ -1,4 +1,3 @@
-
 // Array that will hold the possible/present hours 9-5
 var possibleHours = [
     moment().hour(9).format('hA'),
@@ -14,89 +13,105 @@ var possibleHours = [
 
 
 //This is how you get the time to display at the top of the page
-var currentDayEl = $('#currentDay');
-var hourStyle = $('col-1 hour');
-
-// Add current day to <p> tag 
 var currentDay = moment().format('MMMM Do, YYYY');
-currentDayEl.text(currentDay);
+$('#currentDay').text(currentDay);
+
 
 // Check to see if the task is within the possible hours 
 var checkHour = function (tasksSpace) {
-    //get current number for hours
-        var momentHour = moment($(hourStyle).text().trim(), 'hA').hour();
-        var currentHour = moment().hour();
-      
-            if (momentHour < currentHour) {
-                $(tasksSpace).addClass('past');
-                $(tasksSpace).removeClass('future present');
-            }
-            else if (momentHour === currentHour) {
-                $(tasksSpace).addClass('present');
-                $(tasksSpace).removeClass('past future');
-            }
-            else {
-                $(tasksSpace).addClass('future');
-                $(tasksSpace).removeClass('past present');
-            }
+//get current number for hours
+    var currentHour = moment().hour();
+    var momentHour =  moment().hour();
+    console.log(momentHour, currentHour);
+    
+
+     //conditional to add correct color background to time block depending on time
+     if (currentHour > momentHour) {
+        $(tasksSpace).addClass('past');
+        $(tasksSpace).removeClass("future present");
+     }
+     else if (currentHour === momentHour) {
+         $(tasksSpace).addClass('present');
+         $(tasksSpace).removeClass("past future");
+     }
+     else {
+         $(tasksSpace).addClass('future');
+         $(tasksSpace).removeClass("past present");
         }
 
-
+    
+    }
 
 // Generate the tasks using js
     for (var i = 0; i < possibleHours.length; i++) {
    
-
+    // Made  a div to hold the btn and user input 
     var tasksRow = $('<div>')
         .addClass('row time-block')
-        .attr({
-            id: 'row-' + (i + 9)
-        })
-
+        
     // add 1 div with class hour
     var tasksHour = $('<div>')
         .addClass('col-1 hour')
         .text(possibleHours[i])
-        .attr({
-            id: i + 9
-        })
-
+        
     // add 1 div with class
     var tasksSpace = $('<div>')
         .addClass('col-10')
-        .attr({
-            id: 'time-block-' + (i + 9)
-        })
-
-    var saveBtn = $('<button>')
-        .addClass('col-1 saveBtn')
-        .attr({
-            id: 'save-button-' + (i + 9),
-            type: 'button',
-        })
-          // add save icon
-    var saveIcon = $('<i>')
     
-
-    // add p element with class of description
+    // add p element with class
     var userInput = $('<p>')
         .addClass('description')
         .text(' ')
+        
+    // Save button with class 
+    var saveBtn = $('<button>')
+        .addClass('col-1 saveBtn')
         .attr({
-            id: 'Hour-' + (i + 9)
-        });
+            type: 'button',
+        })
 
 // Append all the element so they show up within the container div 
-        $(".container").append(tasksRow);
-        $(tasksRow).append(tasksHour);
-        $(tasksRow).append(tasksSpace);
-        $(tasksSpace).append(userInput);
-        $(tasksRow).append(saveBtn);
-        $(saveBtn).append(saveIcon);
-
+    $(".container").append(tasksRow);
+    $(tasksRow).append(tasksHour);
+    $(tasksRow).append(tasksSpace);
+    $(tasksSpace).append(userInput);
+    $(tasksRow).append(saveBtn);
         
-        checkHour(tasksSpace);
-    }
+    checkHour(tasksSpace);
+    
+$('.saveBtn').on('click', function () {
+    //get nearby values.
+    var time = $(this).siblings().first().text();
+    var text = $(this).siblings().last().text();
+    console.log(time, text);
+    
+
+    //set items in local storage.
+    localStorage.setItem(time, text);
+});
+
+
+
+$('.col-10').on('click', 'p', function () {
+    var text = $(this)
+    .text()
+    .trim()
+
+var textInput = $('<textarea>')
+    .addClass('form-control')
+    .val(text);
+
+$(this).replaceWith(textInput);
+
+textInput.trigger('focus');
+});
+
+}
+//Load tasks for first time
+
+
+
+
 
 
 
