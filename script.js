@@ -15,16 +15,35 @@ var possibleHours = [
 
 //This is how you get the time to display at the top of the page
 var currentDayEl = $('#currentDay');
-var currentHour = moment().hour();
+var hourStyle
 
 // Add current day to <p> tag 
 var currentDay = moment().format('MMMM Do, YYYY');
 currentDayEl.text(currentDay);
 
+// Check to see if the task is within the possible hours 
+var checkHour = function (tasksSpace) {
+    //get current number for hours
+        var momentHour = moment($(hourStyle).text().trim(), 'hA').hour();
+        var currentHour = moment().hour();
+      
+            if (momentHour < currentHour) {
+                $(tasksSpace).addClass('past');
+                $(tasksSpace).removeClass('future present');
+            }
+            else if (momentHour === currentHour) {
+                $(tasksSpace).addClass('present');
+                $(tasksSpace).removeClass('past future');
+            }
+            else {
+                $(tasksSpace).addClass('future');
+                $(tasksSpace).removeClass('past present');
+            }
+        }
+
 
 
 // Generate the tasks using js
-var createTasks = function () {
     for (var i = 0; i < possibleHours.length; i++) {
    
 
@@ -73,36 +92,17 @@ var createTasks = function () {
         //append timeBlockEventSpace to timeBlockRow
         $(tasksRow).append(tasksSpace);
         //append <p> element to timeBlockEventSpace
-        $(tasksRow).append(userInput);
+        $(tasksSpace).append(userInput);
         $(tasksRow).append(saveBtn);
         //append save icon to save button
         $(saveBtn).append(saveIcon);
 
         
-
+        checkHour(tasksSpace);
     }
 
 
 
-}
-// Check to see if the task is within the possible hours 
-var checkHour = function (tasksSpace) {
-    //get current number for hours
-        var momentHour = moment($('col-1 hour').text().trim(), 'hA').hour();
-      
-            if (momentHour < currentHour) {
-                $(tasksSpace).addClass("past");
-                $(tasksSpace).removeClass("future present");
-            }
-            else if (momentHour === currentHour) {
-                $(tasksSpace).addClass("present");
-                $(tasksSpace).removeClass("past future");
-            }
-            else {
-                $(tasksSpace).addClass("future");
-                $(tasksSpace).removeClass("past present");
-            }
-        }
 
 
 
