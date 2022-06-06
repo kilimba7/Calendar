@@ -1,4 +1,19 @@
-// Array that will hold the possible/present hours 9-5
+// save btn listener to load and save the info from user input
+$(".saveBtn").on("click", function () {
+    //get nearby values.
+    var text = $(this).siblings().last().text();
+    var hour = $(this).siblings().first().text();
+    
+    
+    //set items in local storage.
+    localStorage.setItem(hour, text);
+})
+
+    // Having trouble getting my info to appear after refreshing 
+    localStorage.getItem('.form-control');
+    console.log(localStorage.getItem);
+
+// Array that will hold the possible hours (9-5)
 var possibleHours = [
     moment().hour(9).format('hA'),
     moment().hour(10).format('hA'),
@@ -13,7 +28,7 @@ var possibleHours = [
 
 
 //This is how you get the time to display at the top of the page
-var currentDay = moment().format('MMMM Do, YYYY');
+var currentDay = moment().format('dddd, MMMM Do YYYY, h:mm a');
 $('#currentDay').text(currentDay);
 
 
@@ -21,8 +36,8 @@ $('#currentDay').text(currentDay);
 var checkHour = function (tasksSpace) {
 //get current number for hours
     var currentHour = moment().hour();
-    // var momentHour =  moment().hour(possibleHours[i]);
-    var momentHour = possibleHours [i];
+// Need to convert momentHour so it doens't read as 9 AM, etc. 
+    var momentHour = moment().hour(i).format('H');
     console.log(momentHour, currentHour);
     
 
@@ -44,14 +59,14 @@ var checkHour = function (tasksSpace) {
 // Generate the tasks using js
     for (var i = 0; i < possibleHours.length; i++) {
    
-    // Made  a div to hold the btn and user input 
+    // Made  a div to hold the space
     var tasksRow = $('<div>')
         .addClass('row time-block')
         .attr({
             id: i + 9
         })
         
-    // add 1 div with class hour
+    // add 1 div to display the hours
     var tasksHour = $('<div>')
         .addClass('col-1 hour')
         .text(possibleHours[i])
@@ -59,7 +74,7 @@ var checkHour = function (tasksSpace) {
             id: i + 9
         })
         
-    // add 1 div with class
+    // add 1 div to hold the input and save btn
     var tasksSpace = $('<div>')
         .addClass('col-10')
         .attr({
@@ -68,7 +83,7 @@ var checkHour = function (tasksSpace) {
     
     // add p element with class
     var userInput = $('<p>')
-        .addClass('description')
+        .addClass('row')
         .text(' ')
         .attr({
             id: i + 9
@@ -91,23 +106,6 @@ var checkHour = function (tasksSpace) {
         
     checkHour(tasksSpace);
 }
-
-//Assign saveBtn click listener for user input and time stamp??
-$(".saveBtn").on("click", function () {
-    //get nearby values.
-    console.log(this);
-    var text = $(this).siblings().last().text();
-    var hour = $(this).siblings().first().text();
-    
-    
-    //set items in local storage.
-    localStorage.setItem(hour, text);
-
-
-    //load any saved data from LocalStorage
-$(".description").val(localStorage.getItem('#' + (i + 9)));
-})
-
 
 // Highlights the area where you can edit. For now, I can only click on the very top of it to display
 $('.col-10').on('click', 'p', function () {
@@ -136,6 +134,9 @@ $('.col-10').on('blur', 'textarea', function () {
 
     $(this).replaceWith(userText);
 });
+
+
+
 
 
 
