@@ -134,30 +134,3 @@ $('.saveBtn').on('click', function () {
      localStorage.getItem('.col-1 hour');
     
 });
-
- 
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
