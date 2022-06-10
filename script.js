@@ -22,22 +22,20 @@ var checkHour = function (tasksSpace) {
 //get current number for hours
     var currentHour = moment().hour();
 // Need to convert momentHour so it doens't read as 9 AM, etc. 
-    var momentHour = moment().hour(i).format('h');
+    var momentHour = moment().hour(i+9).format('k');
+    $(tasksSpace).removeClass('past present future');
     console.log(momentHour, currentHour);
     
 
      //conditional to add correct color background to time block depending on time
      if (currentHour > momentHour) {
         $(tasksSpace).addClass('past');
-        $(tasksSpace).removeClass('future present');
      }
      else if (currentHour === momentHour) {
          $(tasksSpace).addClass('present');
-         $(tasksSpace).removeClass("past future");
      }
      else {
          $(tasksSpace).addClass('future');
-         $(tasksSpace).removeClass('past present');
         }
 };
 
@@ -122,8 +120,11 @@ $('.col-10').on('blur', 'textarea', function () {
 });
 
 // save btn listener to load and save the info from user input
-$('.saveBtn').on('click', function () {
+var save = function () { 
+    $('.saveBtn').on('click', function);
     //get nearby values.
+    
+    function myFunction() {
     var text = $(this).siblings().last().text();
     var hour = $(this).siblings().first().text();
 
@@ -131,6 +132,9 @@ $('.saveBtn').on('click', function () {
     localStorage.setItem(hour, text); 
     
     // Having trouble getting my info to appear after refreshing
-     localStorage.getItem('.col-1 hour');
+    localStorage.getItem(text);
     
-});
+}
+
+}
+
